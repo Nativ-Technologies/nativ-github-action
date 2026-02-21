@@ -1,7 +1,6 @@
 """Translate a .po (gettext) file using the Nativ SDK."""
 import argparse
 import re
-import sys
 from nativ import Nativ
 
 

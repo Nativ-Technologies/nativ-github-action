@@ -13,16 +13,16 @@ def main():
     args = parser.parse_args()
 
     with open(args.source_file, "r", encoding="utf-8") as f:
-        lines = [l.rstrip("\n") for l in f.readlines()]
+        lines = [line.rstrip("\n") for line in f.readlines()]
 
-    non_empty = [(i, l) for i, l in enumerate(lines) if l.strip()]
+    non_empty = [(i, line) for i, line in enumerate(lines) if line.strip()]
 
     if not non_empty:
         with open(args.output_file, "w", encoding="utf-8") as f:
             f.write("\n".join(lines) + "\n")
         return
 
-    texts = [l for _, l in non_empty]
+    texts = [line for _, line in non_empty]
 
     client = Nativ()
     try:

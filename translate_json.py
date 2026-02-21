@@ -1,7 +1,6 @@
 """Translate a JSON i18n file (flat or nested) using the Nativ SDK."""
 import argparse
 import json
-import sys
 from nativ import Nativ
 
 
