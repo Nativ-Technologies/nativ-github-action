@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install ruff
+
+      - name: Lint Python scripts
+        run: ruff check translate_json.py translate_yaml.py translate_po.py translate_lines.py
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t nativ-github-action .
+
+      - name: Verify nativ CLI in container
+        run: docker run --rm nativ-github-action nativ --version
+        continue-on-error: true

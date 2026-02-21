@@ -1,0 +1,78 @@
+name: "Nativ Localize"
+description: "Translate i18n files in CI using the Nativ AI localization platform"
+author: "Nativ Technologies"
+
+branding:
+  icon: "globe"
+  color: "green"
+
+inputs:
+  api_key:
+    description: "Nativ API key (nativ_xxx…). Store as a GitHub secret."
+    required: true
+
+  source_path:
+    description: "Path (file or directory) containing source locale files"
+    required: true
+    default: "locales/en"
+
+  target_languages:
+    description: "Comma-separated target languages (e.g. 'French,German,Japanese')"
+    required: true
+
+  source_language:
+    description: "Source language name"
+    required: false
+    default: "English"
+
+  file_pattern:
+    description: "Glob pattern for i18n files (relative to source_path if it is a dir)"
+    required: false
+    default: "*.json"
+
+  output_dir:
+    description: "Base directory for translated output files. Language subdirs are created here."
+    required: false
+    default: "locales"
+
+  formality:
+    description: "Formality level (very_informal, informal, neutral, formal, very_formal)"
+    required: false
+    default: ""
+
+  commit:
+    description: "Auto-commit translated files (true/false)"
+    required: false
+    default: "false"
+
+  commit_message:
+    description: "Commit message when commit=true"
+    required: false
+    default: "chore(i18n): update translations via Nativ"
+
+  create_pr:
+    description: "Create a pull request with translated files (true/false)"
+    required: false
+    default: "false"
+
+  pr_title:
+    description: "PR title when create_pr=true"
+    required: false
+    default: "chore(i18n): update translations via Nativ"
+
+  pr_branch:
+    description: "Branch name for the PR"
+    required: false
+    default: "nativ/translations"
+
+outputs:
+  files_translated:
+    description: "Number of files translated"
+  languages:
+    description: "Comma-separated list of languages that were translated"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    NATIV_API_KEY: ${{ inputs.api_key }}
